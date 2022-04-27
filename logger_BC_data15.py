@@ -859,7 +859,13 @@ class LOGFC(LOG):
             for Uex0 in Uex:
                 Uex1=Uex0-0.1
                 Uex2=Uex0+0.1
-                wn=str(Uex0)+'.osc'
+
+                if os.path.exists('FCtable_Uex'):
+                    pass
+                else:
+                    os.mkdir('FCtable_Uex')
+
+                wn='FCtable_Uex\\'+str(Uex0)+'.osc'
                 with open((wn), 'w') as csv_file2:
                     try:
                         self.BC3min()
@@ -941,18 +947,24 @@ for namefiles in namefile:
         #print(Log.TimeLog)
     except:
         pass
+
+if os.path.exists('table'):
+    pass
+else:
+    os.mkdir("table")
+
+
+
 try:
-    wn = newString.rsplit("_")[0]+"-caldata-"+sys.argv[1]+".osc"#"caldata"+sys.argv[1]+".osc"
+    wn = "table\\"+newString.rsplit("_")[0]+"-caldata-"+sys.argv[1]+".osc"#"caldata"+sys.argv[1]+".osc"
     Log.save(wn)
     print('измерения мощности на калориметр ок')
 except:
     print('нет данных калориметра')
 
 try:
-    wn2= "IFC"+sys.argv[1]+".osc"
+    wn2= "table\\"+"IFC"+sys.argv[1]+".osc"
     LogFC.save(wn2)
     print('измерение профиля пучка ОК')
 except:
     print('ЦФ не двигали')
-
-
