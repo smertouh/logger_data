@@ -98,6 +98,8 @@ class signaloscs:
                  "RF_UA1":'miniFC',
                 "Cath1_C":'miniFC',
                 'S_C1(A)':'miniFC',
+                'An_V':'miniFC',
+                'APS_C':'miniFC',
                 'PRF':'PRF'
                 }
             #'Time', 'G1 [kV]', "RF_UA(kV)", "C_C (A)", 'S_C1(A)'
@@ -616,7 +618,7 @@ class LOG:
         self.Log = {}
         self.TimeLog = []
         self.columnnames=['Time']+list(osc.ColumnNames)
-        self.newcolumnnames=['Time','RF_UG1',"RF_UA1","Cath1_C",'S_C1(A)','PRF']
+        self.newcolumnnames=['Time','RF_UG1',"RF_UA1","Cath1_C",'S_C1(A)','PRF','An_V','APS_C']
 
     def update(self, osc, Time):
         self.Log.update(osc.logdata())
@@ -902,14 +904,14 @@ for namefiles in namefile:
     except:
         pass
 try:
-    wn = newString.rsplit("_")[0]+"-caldata-"+sys.argv[1]+".osc"#"caldata"+sys.argv[1]+".osc"
+    wn = "table\\"+newString.rsplit("_")[0]+"-caldata-"+sys.argv[1]+".osc"#"caldata"+sys.argv[1]+".osc"
     Log.save(wn)
     print('измерения мощности на калориметр ок')
 except:
     print('нет данных калориметра')
 
 try:
-    wn2= "IFC"+sys.argv[1]+".osc"
+    wn2= "table\\"+"IFC"+sys.argv[1]+".osc"
     LogFC.save(wn2)
     print('измерение профиля пучка ОК')
 except:
