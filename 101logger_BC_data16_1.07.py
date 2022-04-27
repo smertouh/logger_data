@@ -903,6 +903,14 @@ for namefiles in namefile:
         #print(Log.TimeLog)
     except:
         pass
+
+if os.path.exists('table'):
+    pass
+else:
+    os.mkdir("table")
+
+
+
 try:
     wn = "table\\"+newString.rsplit("_")[0]+"-caldata-"+sys.argv[1]+".osc"#"caldata"+sys.argv[1]+".osc"
     Log.save(wn)
