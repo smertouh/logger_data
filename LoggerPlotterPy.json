@@ -1,0 +1,6 @@
+{
+    "included": "Time\nRF_UA1\nS_C1(A)\nRF_UG1\nAn_V\nCath1_C\nPRF",
+    "extra_plot": "('z', sig('RF_UG1(V)').x,(np.arccos((-480+403)/(sig('RF_UG1(V)').y+0.001))))\n\n('PRF2', sig('z').x,((sig('z').y-np.sin(sig('z').y)*np.cos(sig('z').y))/(np.sin(sig('z').y)-sig('z').y*np.cos(sig('z').y))*(sig('RF_UA(kV)').y/2*((sig('C_C (A)').y-sig('S_C1(A)').y)))))\n\n('vac, Torr', sig('Vacuum_V').x, pow(10,(1.667*sig('Vacuum_V').y-11.46)))\n\n\n\n",
+    "extra_col": "\n('PRF',  '%5.1f'%((((np.arccos((-480+403)/self.value(row,'RF_UG1')))-np.sin(np.arccos((-480+403)/self.value(row,'RF_UG1')))*np.cos(np.arccos((-480+403)/self.value(row,'RF_UG1'))))/(np.sin(np.arccos((-480+403)/self.value(row,'RF_UG1')))-(np.arccos((-480+403)/self.value(row,'RF_UG1')))*np.cos(np.arccos((-480+403)/self.value(row,'RF_UG1'))))*(self.value(row,'RF_UA1')/2*(self.value(row,'Cath1_C')-self.value(row,'S_C1(A)'))))),'kW')\n\n('vac', '%6.0e'%(pow(10,(1.667*self.value(row,'Vacuum_V')-11.46))), 'Tor')\n\n('PFS_2',  '%6.2f'%(self.value(row,'FS_T_2')*self.value(row,'FS_Flow_2')*0.07), 'kW')\n\n('PFS_1',  '%6.2f'%(self.value(row,'FS_T_1')*self.value(row,'FS_Flow_1')*0.07), 'kW')\n\n('PFS_BP',  '%6.2f'%(self.value(row,'FS_T_BP')*self.value(row,'FS_Flow_BP')*0.07), 'kW')\n\n",
+    "plot_order": "RF_UA1\nS_C1(A)\nRF_UG1\nAn_V\nCath1_C"
+}
