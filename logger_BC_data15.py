@@ -95,7 +95,7 @@ class signaloscs:
 
             self.Columntype = {
                 'IPG': 'ADC',
-                'UPG': 'ADC',
+                'UPG': 'ADC_no_zero',
                 'Iex': 'ADC',
                 'Uex': 'ADC',
                 'Iac_2': 'ADC',
@@ -285,7 +285,7 @@ class signaloscs:
                 for t in Times:
                     if round((self.ColumnNamesDict['Uex'].readvalue(np.nan, t)), 1)==vMax:
                         #values.append(vMax)
-                        time_without_BD.append(P-t)
+                        time_without_BD.append(abs(P - t))
                     elif round((self.ColumnNamesDict['Uex'].readvalue(np.nan, t)), 1)>vMax:
                         vMax=round((self.ColumnNamesDict['Uex'].readvalue(np.nan, t)), 1)
                         #values=[vMax]
@@ -495,7 +495,10 @@ class signalosc:
                 pass
 
         if signame=='IPG' or signame=='UPG' or signame=='RF_UG1' or  signame ==  "RF_UA1" or signame == "Cath1_C" or signame == 'S_C1(A)':
-            t1=0
+            try:
+                t1=float(sys.argv[2])
+            except:
+                t1=0.1
         if not signal is np.nan:
             matrix2 = np.delete(nm.copy(), 0, axis=0)
             self.nmt = self.columnfl(matrix2, 0)
@@ -620,7 +623,7 @@ class signalosc:
         elif self.type == 'Log': #2021-06-07
             d = self.value
         elif self.type == 'Quadera': #2021-06-09
-            d = self.value
+            d = self.value #asdf
         elif self.type == 'miniFC':
             """ 2021-05-31
             if math.isnan (self.slowT):
