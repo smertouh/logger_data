@@ -68,7 +68,7 @@ for snf in namefolder:
                             zerovali = 1
                             if 'T0'in namei:
                                 zerovali=0
-                            if namei in nenamei: #2022-03-16
+                            elif namei in newnamei: #2022-03-16
                                 zerovali = 0 #2022-03-16
                         except:
                             zerovali = 0
@@ -161,21 +161,45 @@ for snf in namefolder:
 
         coef = coefs
         names.append("Ib")
+        Ib = np.size(names) - 1
+        names.append("PRF")
+        PRF = np.size(names) - 1
+
         i = 0
         # ищем канал перехвата и второго тока
+        Iac = 1
+        IAG = 1
+        RF_UG1 = 1
+        RF_UA1 = 1
+        Cath1_C = 1
+        S_C1A = 1
         for s in names:
 
             if s == 'Iac_2':
                 Iac = i
-            if s == 'IAG':
+            elif s == 'IAG':
                 IAG = i
-            i = i + 1
+            elif s == 'RF_UG1':
+                RF_UG1 = i
+            elif s == 'RF_UA1':
+                RF_UA1 = i
+            elif s == 'Cath1_C':
+                Cath1_C = i
+            elif s == 'S_C1(A)':
+                S_C1A = i
+
+            i+= 1
 
         # z=np.zeros((2245,1))
 
         xxxx.append(xxxt)
         xxxxt.append(xxxt)
-        Ib = np.size(names) - 1
+        zeroval.append(0)
+        coef.append(1)
+        xxxx.append(xxxt)
+        xxxxt.append(xxxt)
+        zeroval.append(0)
+        coef.append(1)
         name = names
 
         # интерполируем
@@ -200,6 +224,16 @@ for snf in namefolder:
         # щитаем Ib
         for i in np.arange(0, np.size(xxxt)):
             xxxxx[i, Ib] = xxxxx[i, Iac] - xxxxx[i, IAG]
+
+        # щитаем PRF
+        for i in np.arange(0, np.size(xxxt)):
+            if  abs(xxxxx[i,RF_UG1])>77:
+                alfa=np.arccos((-480 + 403) / xxxxx[i,RF_UG1])
+                xxxxx[i, PRF] = (alfa - np.sin(alfa) * np.cos(alfa)) / (np.sin(alfa) - alfa * np.cos(alfa)) * 0.5 * \
+                                xxxxx[i, RF_UA1] * (xxxxx[i, Cath1_C] - xxxxx[i, S_C1A])
+            else:
+                alfa=0
+                xxxxx[i, PRF] = 0
 
         # записываем в файл
         if snf!='':
